@@ -4,31 +4,31 @@
       <!-- Header Row -->
       <div class="col-span-9 grid grid-cols-9 border-b">
         <div class="border-r" />
-        <div
-          v-for="evidenceItem in evidence"
-          :key="`evidence--${evidenceItem.key}__title`"
+    <div
+      v-for="evidenceItem in evidence"
+      :key="`evidence--${evidenceItem.key}__title`"
           class="border-r flex py-2 text-center">
-          <span
-            class="m-auto"
-            :class="{
-              'opacity-50': !possibleEvidence.includes(evidenceItem.key),
-            }"
-            v-text="evidenceItem.name" />
-        </div>
+      <span
+        class="m-auto"
+        :class="{
+          'opacity-50': !possibleEvidence.includes(evidenceItem.key),
+        }"
+        v-text="evidenceItem.name" />
+    </div>
         <div class="flex py-2 text-center">
-          <span class="m-auto">Exclude</span>
-        </div>
+      <span class="m-auto">Exclude</span>
+    </div>
       </div>
 
       <!-- Evidence Selectors Row -->
       <div class="col-span-9 grid grid-cols-9 border-b">
         <div class="border-r" />
         <div
-          v-for="evidenceItem in evidence"
-          :key="`evidence--${evidenceItem.key}__select`"
+      v-for="evidenceItem in evidence"
+      :key="`evidence--${evidenceItem.key}__select`"
           class="border-r"
-          :class="{
-            'opacity-50': !possibleEvidence.includes(evidenceItem.key),
+      :class="{
+        'opacity-50': !possibleEvidence.includes(evidenceItem.key),
           }">
           <EvidenceSelect
             v-model="evidenceModel[evidenceItem.key]"
@@ -38,90 +38,90 @@
       </div>
 
       <div class="col-span-9 entity__row">
-        <TransitionGroup
-          tag="div"
-          class="relative"
-          name="list"
-          mode="out-in">
-          <div
+      <TransitionGroup
+        tag="div"
+        class="relative"
+        name="list"
+        mode="out-in">
+        <div
             v-for="(entity, index) in filteredEntities"
-            :key="`entity--${entity.key}`"
-            tabindex="0"
-            :data-index="index"
-            class="duration-100 entity__details focus:outline-none focus:shadow-outline focus:z-10 group hover:bg-gray-900 relative transition-colors"
-            @keyup.up.prevent="(event) => selectNextElement(event, entity, index)"
-            @keyup.down.prevent="(event) => selectNextElement(event, entity, index)"
-            @keyup.enter.prevent="() => toggleDetails(entity)"
-            @keyup.space.prevent="() => toggleDetails(entity)"
+          :key="`entity--${entity.key}`"
+          tabindex="0"
+          :data-index="index"
+          class="duration-100 entity__details focus:outline-none focus:shadow-outline focus:z-10 group hover:bg-gray-900 relative transition-colors"
+          @keyup.up.prevent="(event) => selectNextElement(event, entity, index)"
+          @keyup.down.prevent="(event) => selectNextElement(event, entity, index)"
+          @keyup.enter.prevent="() => toggleDetails(entity)"
+          @keyup.space.prevent="() => toggleDetails(entity)"
             @click="() => filteredEntities.length > 1 ? toggleDetails(entity) : null">
-            <div
-              :key="`${entity.key}__data`"
+          <div
+            :key="`${entity.key}__data`"
               class="col-span-9 cursor-pointer duration-150 entity__row grid grid-cols-9 relative transition-colors">
-              <div
-                class="flex px-3"
-                :class="{
-                  'bg-gray-900': shownDetails === entity.key,
-                  'opacity-75': getEntityLikelihood(entity) === -1,
-                  'opacity-50': getEntityLikelihood(entity) === -2,
-                  'opacity-25': getEntityLikelihood(entity) < -2,
-                }">
-                <h4
-                  class="ml-auto my-auto"
-                  v-text="entity.name" />
-              </div>
-              <div
-                v-for="evidenceItem in evidence"
-                :key="`entity--${entity.key}--${evidenceItem.key}`"
-                class="duration-100 py-2 text-center transition-colors"
-                :class="calculateEvidenceClasses(evidenceItem, entity)">
-                <Icon
-                  v-if="entityHasInconclusiveEvidence(entity, evidenceItem)"
-                  icon="tilde"
-                  class="text-yellow-300" />
-                <Icon
-                  v-else-if="entityHasEvidence(entity, evidenceItem)"
-                  icon="check"
-                  class="text-green-300" />
-                <Icon
-                  v-else
-                  icon="times"
-                  class="text-red-300" />
-              </div>
-              <div class="duration-100 py-2 text-center transition-colors">
-                <input
-                  type="checkbox"
-                  :checked="excludedGhosts.includes(entity.key)"
-                  @change="toggleExcludeGhost(entity.key)"
-                  class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2" />
-              </div>
-
-              <TransitionExpand
-                :key="`${entity.key}__data`"
-                class="col-span-9">
-                <div
-                  v-show="shownDetails === entity.key"
-                  class="bg-gray-900">
-                  <div
-                    v-for="type in details"
-                    :key="`${entity.key}__${type.key}`"
-                    class="p-4">
-                    <h3
-                      class="text-gray-300"
-                      v-text="type.name" />
-                    <ul>
-                      <li
-                        v-for="(text, i) in entity[type.key]"
-                        :key="`${entity.key}__${type}--${i}`"
-                        v-text="text" />
-                    </ul>
-                  </div>
-                </div>
-              </TransitionExpand>
+            <div
+              class="flex px-3"
+              :class="{
+                'bg-gray-900': shownDetails === entity.key,
+                'opacity-75': getEntityLikelihood(entity) === -1,
+                'opacity-50': getEntityLikelihood(entity) === -2,
+                'opacity-25': getEntityLikelihood(entity) < -2,
+              }">
+              <h4
+                class="ml-auto my-auto"
+                v-text="entity.name" />
             </div>
+            <div
+              v-for="evidenceItem in evidence"
+              :key="`entity--${entity.key}--${evidenceItem.key}`"
+              class="duration-100 py-2 text-center transition-colors"
+              :class="calculateEvidenceClasses(evidenceItem, entity)">
+              <Icon
+                v-if="entityHasInconclusiveEvidence(entity, evidenceItem)"
+                icon="tilde"
+                class="text-yellow-300" />
+              <Icon
+                v-else-if="entityHasEvidence(entity, evidenceItem)"
+                icon="check"
+                class="text-green-300" />
+              <Icon
+                v-else
+                icon="times"
+                class="text-red-300" />
+            </div>
+            <div class="duration-100 py-2 text-center transition-colors">
+              <input
+                type="checkbox"
+                :checked="excludedGhosts.includes(entity.key)"
+                @change="toggleExcludeGhost(entity.key)"
+                class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2" />
+            </div>
+
+            <TransitionExpand
+              :key="`${entity.key}__data`"
+                class="col-span-9">
+              <div
+                  v-show="shownDetails === entity.key"
+                class="bg-gray-900">
+                <div
+                  v-for="type in details"
+                  :key="`${entity.key}__${type.key}`"
+                  class="p-4">
+                  <h3
+                    class="text-gray-300"
+                    v-text="type.name" />
+                  <ul>
+                    <li
+                      v-for="(text, i) in entity[type.key]"
+                      :key="`${entity.key}__${type}--${i}`"
+                      v-text="text" />
+                  </ul>
+                </div>
+              </div>
+            </TransitionExpand>
           </div>
-        </TransitionGroup>
-      </div>
-    </Grid>
+        </div>
+      </TransitionGroup>
+    </div>
+  </Grid>
 
     <!-- Excluded Ghosts Table -->
     <div v-if="excludedGhosts.length > 0" class="mt-8">
@@ -359,13 +359,13 @@ export default {
       // Check if the entity has all confirmed evidence and doesn't have any excluded evidence
       for (const [evidenceKey, evidenceValue] of Object.entries(this.evidenceModel)) {
         if (evidenceValue === 'confirmed' && !entity.evidence.includes(evidenceKey)) {
-          return false;
-        }
+              return false;
+            }
         if (evidenceValue === 'not_likely' && entity.evidence.includes(evidenceKey)) {
-          return false;
-        }
+              return false;
+            }
       }
-      return true;
+            return true;
     },
 
     /**
@@ -397,6 +397,8 @@ export default {
     reset() {
       this.shownDetails = null;
       this.evidenceModel = {};
+      this.excludedGhosts = [];
+      this.$eventBus.save('excludedGhosts', this.excludedGhosts);
     },
 
     toggleExcludeGhost(ghostKey) {

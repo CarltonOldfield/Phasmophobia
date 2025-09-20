@@ -11,7 +11,7 @@
             ref="reset"
             class="active:bg-gray-700 h-100 hover:bg-gray-900"
             @click="$eventBus.triggerKey('r');">
-            <span class="underline">R</span>eset
+            <span class="underline text-pink-500">R</span><span class="text-pink-500">eset</span>
           </TButton>
         </div>
       </div>
