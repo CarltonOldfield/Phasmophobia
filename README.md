@@ -22,7 +22,7 @@ You can use the application directly in your browser:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Iknownothinsayswife/Phasmophobia.git
+git clone https://github.com/carltonoldfield/Phasmophobia.git
 ```
 
 2. Navigate to the project directory:
